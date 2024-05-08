@@ -20,7 +20,7 @@ LLM Review Analyzer is a Python-based tool designed to automate the analysis of 
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/yourgithubusername/llm-review-analyzer.git
+git clone https://github.com/emilwennstrom/llm-review-analyzer.git
 cd llm-review-analyzer
 ```
 
