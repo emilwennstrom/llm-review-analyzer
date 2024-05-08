@@ -28,11 +28,12 @@ LLM Review Analyzer is a Python-based tool designed to automate the analysis of 
 2. **Set Up Environment**
 
 Create a virtual environment and activate it:
-   ```bash
-   python -m venv venv
-   Windows: venv\Scripts\activate
-   Mac/Linux: source venv/bin/activate
-  ```
+
+      ```bash
+      python -m venv venv
+      Windows: venv\Scripts\activate
+      Mac/Linux: source venv/bin/activate
+     ```
 
 
 3. **Install Dependencies**
