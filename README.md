@@ -24,7 +24,7 @@ LLM Review Analyzer is a Python-based tool designed to automate the analysis of 
    git clone https://github.com/yourgithubusername/llm-review-analyzer.git
    cd llm-review-analyzer
 
-2. Set Up Environment
+2. **Set Up Environment**
 
 Create a virtual environment and activate it:
    ```bash
@@ -33,7 +33,7 @@ Create a virtual environment and activate it:
    Mac/Linux: source venv/bin/activate
 
 
-3. Install Dependencies
+3. **Install Dependencies**
 
 Install all required Python packages
 pip install -r requirements.txt
