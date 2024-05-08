@@ -5,8 +5,7 @@ LLM Review Analyzer is a Python-based tool designed to automate the analysis of 
 ## Features
 
 - Support for Google Play Store and Apple App Store reviews.
-- Integration with local Ollama server and Google Cloud Vertex AI for advanced data processing.
-- Extensible framework to add additional sources and review types.
+- Integration with local Ollama server and Google Cloud Vertex AI for data processing.
 
 ## Getting Started
 
@@ -42,4 +41,29 @@ Mac/Linux: source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Configuration
+
+Environment Variables
+
+Create a .env file in the root folder and set up the following variables:
+
+- OLLAMA_URL=127.0.0.0:11434  # Address to the Ollama server if running local models
+- PROJECT=your-google-cloud-project-id  # Google Cloud project name
+- LOCATION=europe-west1  # Location of the models
+
+Data Preparation
+Place your CSV files containing app reviews in the data folder or specify a path to a storage bucket in main.py.
+
+### Usage
+
+Run the main script to start analyzing the review data:
+
+```bash
+python main.py
+```
+
+### Customization
+
+- Adding New Review Sources: Modify reviews.utils.py to integrate more data sources.
+- Defining Models: Define new models or modify existing ones in llms.models.py.
 
