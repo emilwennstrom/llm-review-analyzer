@@ -37,7 +37,8 @@ Create a virtual environment and activate it:
 
 3. **Install Dependencies**
 
-Install all required Python packages
+```bash
 pip install -r requirements.txt
+```
 
 
