@@ -94,7 +94,7 @@ def __clean_google_reviews(df: pd.DataFrame):
 
         # Standardizing time
         __standardize_time(df_new)
-        df_new['rating'] = df_new['rating'].astype(str) + '/5'
+        #df_new['rating'] = df_new['rating'].astype(str) + '/5'
 
         desired_order = ['provider', 'app_version', 'text', 'rating', 'last_updated']
         return df_new[desired_order]
@@ -107,7 +107,7 @@ def __clean_apple_reviews(df: pd.DataFrame):
     
     __standardize_time(df_new)
    # df_new['text'] = df_new['text'].apply(__clean_text)
-    df_new['rating'] = df_new['rating'].astype(str) + '/5'
+    #df_new['rating'] = df_new['rating'].astype(str) + '/5'
     
     desired_order = ['provider', 'app_version', 'text', 'rating', 'last_updated']
     return df_new[desired_order]

@@ -12,5 +12,5 @@ Classification Guidelines:
 - Classify as 'False' if the review only praises the service, comments on its current state without constructive feedback, or is irrelevant to service development.
 
 
-Your response should be either 'True' or 'False', nothing else.
+Your response should be either True or False, nothing else.
 """
