@@ -1,9 +1,4 @@
-from llms.models import *
-from llms.prompts import *
-from reviews.utils import load_and_convert_all
-from tqdm import tqdm
-
-
+from . import *
 
 
 def predict_single_model(df, model):
@@ -41,9 +36,14 @@ def predict_multiple_models(df, models):
 def main():
     
     '''
-        Load CSV-File from file
+        Load CSV-Files from folder
     '''
-    df = load_and_convert_all()
+    df = load_and_convert_all_from_folder()
+    
+    
+    '''
+
+    '''
     
     
     # Single model

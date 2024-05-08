@@ -1,20 +1,16 @@
 from . import *
-from langchain_core.output_parsers import StrOutputParser
+
 
 
 def query_model(model, prompt):
     chain = prompt | model | StrOutputParser()
     answer = chain.invoke({})
     return answer
-    if (isinstance(model, ChatVertexAI)):
-        return answer.content
-    else:
-        return answer
 
 def llama3_ollama(temperature = 0, top_k = 10, top_p = 0.5):
     return Ollama(
         name='llama3:instruct',
-        base_url=ollama_url,
+        base_url=OLLAMA_URL,
         temperature=temperature,
         top_k=top_k,
         top_p=top_p
@@ -23,8 +19,8 @@ def llama3_ollama(temperature = 0, top_k = 10, top_p = 0.5):
 def chat_bison(temperature = 0, top_k = 10, top_p = 0.5):
     return ChatVertexAI(
             model_name="chat-bison",
-            location=location,
-            project=project,
+            location=LOCATION,
+            project=PROJECT,
             max_output_tokens=1024,
             temperature=temperature,
             top_k=top_k,
@@ -34,8 +30,8 @@ def chat_bison(temperature = 0, top_k = 10, top_p = 0.5):
 def text_bison(temperature = 0, top_k = 10, top_p = 0.5):
     return VertexAI(
             model_name="text-bison",
-            location=location,
-            project=project,
+            location=LOCATION,
+            project=PROJECT,
             max_output_tokens=1024,
             temperature=temperature,
             top_k=top_k,
