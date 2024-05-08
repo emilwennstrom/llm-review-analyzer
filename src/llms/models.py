@@ -1,5 +1,8 @@
 from . import *
 
+"""
+    Define more models according to needs
+"""
 
 
 def query_model(model, prompt):

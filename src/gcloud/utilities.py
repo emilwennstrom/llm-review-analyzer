@@ -1,5 +1,9 @@
 from . import *
 
+"""
+Utilities for loading files from Google Storage Buckets
+
+"""
 
 def get_reviews_from_bucket(blob_name, bucket_name=STORAGE_BUCKET) -> str:
     """ Downloads a blob into memory.

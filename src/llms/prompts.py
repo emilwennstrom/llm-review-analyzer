@@ -1,3 +1,10 @@
+"""
+Define prompts here.
+
+"""
+
+
+
 usable_review_binary_prompt = """
 You are an AI trained to classify user reviews.
 
