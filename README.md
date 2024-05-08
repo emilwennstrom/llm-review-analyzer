@@ -51,7 +51,7 @@ Create a .env file in the root folder and set up the following variables:
 - PROJECT=your-google-cloud-project-id  # Google Cloud project name
 - LOCATION=europe-west1  # Location of the models
 
-Data Preparation
+Data Preparation:
 Place your CSV files containing app reviews in the data folder or specify a path to a storage bucket in main.py.
 
 ### Usage
