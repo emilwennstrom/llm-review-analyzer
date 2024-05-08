@@ -127,6 +127,18 @@ def combine_and_sort_dataframes(cleaned_dfs):
     sorted_df = combined_df.sort_values(by='last_updated').reset_index(drop=True)
     return sorted_df
 
+def count_words_in_row(row):
+    if pd.notnull(row):
+        words = row.split()
+        return len(words)
+    else:
+        return 0
+
+def drop_short_reviews(df, threshold):
+    word_counts = df['text'].apply(count_words_in_row)
+    df = df[word_counts >= threshold]
+    return df
+
 
 def load_and_convert_all(folder_path: str = 'data\csv'):
     try:
@@ -141,7 +153,11 @@ def load_and_convert_all(folder_path: str = 'data\csv'):
                 cleaned_dfs.append(__clean_google_reviews(df))
             else:
                 raise Exception("Unknown Type")
-        return combine_and_sort_dataframes(cleaned_dfs)
+        combined_df = combine_and_sort_dataframes(cleaned_dfs)
+        combined_df = drop_short_reviews(combined_df, 3)
+        combined_df = combined_df[combined_df['rating'] < 5]
+        return combined_df
+        
     except Exception as e:
         print(f"An error occurred: {e}")
         
