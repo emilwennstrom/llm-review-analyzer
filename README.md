@@ -32,6 +32,7 @@ Create a virtual environment and activate it:
    Windows: venv\Scripts\activate
    Mac/Linux: source venv/bin/activate
 
+
 3. Install Dependencies
 
 Install all required Python packages
