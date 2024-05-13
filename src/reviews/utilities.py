@@ -66,8 +66,8 @@ def _load_all_csv_from_folder(path: str = 'data\csv'):
     return dataframes
 
 def _standardize_time(df: pd.DataFrame):
-    df['last_updated'] = pd.to_datetime(df['last_updated'])
-    df['last_updated'] = df['last_updated'].dt.strftime('%Y-%m-%d %H:%M:%S')
+    df['last_updated'] = pd.to_datetime(df['last_updated']).dt.tz_localize(None)
+
 
     
 def _clean_google_reviews(df: pd.DataFrame):
@@ -81,9 +81,7 @@ def _clean_google_reviews(df: pd.DataFrame):
                             'Star Rating': 'rating', 
                             'App Version Name': 'app_version'}, inplace=True)
          # Standardizing time
-        _standardize_time(df_new)
-        #df_new['rating'] = df_new['rating'].astype(str) + '/5'
-
+        df_new['last_updated'] = pd.to_datetime(df_new['last_updated']).dt.tz_localize(None)
         desired_order = ['provider', 'app_version', 'text', 'rating', 'last_updated']
         return df_new[desired_order]
 
@@ -93,7 +91,7 @@ def _clean_apple_reviews(df: pd.DataFrame):
                      'rating', 
                      'text', 'provider']]
     
-    _standardize_time(df_new)
+    df_new['last_updated'] = pd.to_datetime(df_new['last_updated']).dt.tz_localize(None)
     #df_new['rating'] = df_new['rating'].astype(str) + '/5'
     
     desired_order = ['provider', 'app_version', 'text', 'rating', 'last_updated']
