@@ -35,6 +35,37 @@ Your response should be either 'True' or 'False', nothing else.
 """
 
 
+bug_or_feature_prompt = '''
+You are an AI trained to classify user reviews.
+Your task is to analyze each user review and determine whether it contains enough information
+to either make a feature request or a bug report.
+
+The reviews are mostly in swedish, but might be in other languages as well.
+
+Classification Guidelines:
+- Classify a review as 'FEATURE' if it suggests a new feature.
+- Classify a review as 'BUG' if it can be made into a bug report.
+- Classify a review as 'NEITHER' if the review doesn't contain enough information to make either a feature request or a bug report.
+
+Example Classifications:
+- Review: "Hard to make the text bigger."
+  Classification: FEATURE
+  Reason: The review suggests a feature to increase text size, which is useful feedback for enhancing readability.
+
+- Review: "Best app for paying bills."
+  Classification: NEITHER
+  Reason: The review praises the service but lacks suggestions for improvement or reports of issues.
+
+- Review: "The app crashes every time I try to upload a document."
+  Classification: BUG
+  Reason: The review reports a specific bug, providing critical information for troubleshooting and improvement.
+
+Your response should be either 'FEATURE', 'BUG', or NEITHER, nothing else.
+
+
+'''
+
+
 topics_prompt = '''
 Below are examples of app reviews categorized into specific themes. 
 Based on these examples, classify the new review into the appropriate category:

@@ -3,50 +3,55 @@ from langchain_community.document_loaders import DataFrameLoader
 import pandas as pd
 from llms.predictions import *
 from llms.prompts import *
+from gcloud.translate_utilities import *
 from reviews.utilities import *
+from tqdm.auto import tqdm
+import pandas as pd
+
+
+
+LOAD_FROM_BUCKET = False
+MODEL = chat_bison()
+TRANSLATE_REVIEWS = True
 
 
 
 def main():
-    '''choice = ''
-    while choice.lower() != 'q':
-        df = None
-        print("Handle reviews from folder or bucket?")
-        print("1 - Folder")
-        print("2 - Bucket")
-        print("q - Quit")
-        choice = input()  # Get user input
-        if choice == '1':
-            print("Handling folder...")
-            df = load_and_convert_all_from_folder()
-        elif choice == '2':
-            # Code to handle the bucket case
-            print("Handling bucket...")
-        elif choice.lower() == 'q':
-            print("Quitting...")
-            df = None
-            break
-        else:
-            print("Invalid choice, please enter 1, 2, or q.")
-
-        if df is None: continue
-        # Single model
-        df = predict_binary_single_model(df_orig=df[:10], model=chat_bison(), prompt_str=usable_review_binary_prompt)
-        
-        print(df.head())'''
-
-    df_orig = load_and_convert_all_from_folder()
+    
+    df_orig = None
+    # Load data from either file or bucket
+    if (LOAD_FROM_BUCKET is False):
+        df_orig = load_and_convert_all_from_folder()
+    else:
+        #Load from bucket
+        print("Implement")
+    
     if df_orig is None:
         raise ValueError("DataFrame is empty or not loaded properly")
 
-    print(df_orig['last_updated'])
-    #models = get_models(include_chat_bison=True, include_text_bison=True)
-    #predict_multiple_models(models=models)
+    # Translate reviews
+    df = df_orig.copy()
+    column_to_use = 'translated' if TRANSLATE_REVIEWS else 'text'
     
-    df = predict_binary_single_model(df_orig=df_orig, model=chat_bison(), prompt_str=usable_review_binary_prompt)
+    if (TRANSLATE_REVIEWS):
+        tqdm.pandas(desc="Translating texts")
+        df['translated'] = df['text'].progress_apply(apply_translation)
+    
+    # Predict usable reviews
+    df['usable'] = predict_binary_single_column(texts=df[column_to_use], model=MODEL, prompt_str=usable_review_binary_prompt)
     df = df[df['usable'] == True]
     df.drop('usable', axis=1, inplace=True)
-    df = topic_analysis(df_orig=df, model=chat_bison(), prompt_str=topics_prompt)
+    
+    # Predict if either a bug or feature
+    df['predicted'] = text_prediction(column=df[column_to_use], model=MODEL, prompt_str=bug_or_feature_prompt)
+    
+    
+    print(df[['predicted', column_to_use]])
+
+    
+    return
+    
+    df = text_prediction(df_orig=df, model=chat_bison(), prompt_str=topics_prompt)
         
     # Calculate moving average
     df_orig['moving_avg'] = df_orig['rating'].rolling(window=7).mean()  # 7-day moving average
