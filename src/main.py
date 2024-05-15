@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 from langchain_community.document_loaders import DataFrameLoader
-import pandas as pd
 from llms.predictions import *
 from llms.prompts import *
 from gcloud.translate_utilities import *
 from reviews.utilities import *
 from tqdm.auto import tqdm
+from vectors.clustering import cluster_reviews
 import pandas as pd
 
 
@@ -38,20 +38,21 @@ def main():
         df['translated'] = df['text'].progress_apply(apply_translation)
     
     # Predict usable reviews
-    df['usable'] = predict_binary_single_column(texts=df[column_to_use], model=MODEL, prompt_str=usable_review_binary_prompt)
+    df['usable'] = predict_binary(texts=df[column_to_use], model=MODEL, prompt_str=usable_review_binary_prompt)
     df = df[df['usable'] == True]
     df.drop('usable', axis=1, inplace=True)
     
     # Predict if either a bug or feature
-    df['predicted'] = text_prediction(column=df[column_to_use], model=MODEL, prompt_str=bug_or_feature_prompt)
+    df['predicted'] = predict_text(column=df[column_to_use], model=MODEL, prompt_str=bug_or_feature_prompt)
     
+    df['cluster_id'] = cluster_reviews(review_column=df[column_to_use], translated=TRANSLATE_REVIEWS)
     
-    print(df[['predicted', column_to_use]])
+    print(df.head())
 
     
     return
     
-    df = text_prediction(df_orig=df, model=chat_bison(), prompt_str=topics_prompt)
+    df = predict_text(df_orig=df, model=chat_bison(), prompt_str=topics_prompt)
         
     # Calculate moving average
     df_orig['moving_avg'] = df_orig['rating'].rolling(window=7).mean()  # 7-day moving average

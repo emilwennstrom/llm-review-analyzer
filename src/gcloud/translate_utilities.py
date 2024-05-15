@@ -64,7 +64,6 @@ def translate_text(
     return response.translations[0].translated_text
 
 
-#tqdm.pandas(desc="Translating texts")
 def apply_translation(text):
     lang_code = detect_language(text=text, location=LOCATION, project=PROJECT)
     return translate_text(text=text, language_code=lang_code, target='en', location=LOCATION, project=PROJECT)
