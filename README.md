@@ -12,7 +12,8 @@ LLM Review Analyzer is a Python-based tool designed to automate the analysis of 
 ### Prerequisites
 
 - Pip for managing Python packages.
-- Access to Google Cloud with the Vertex AI and associated APIs enabled and/or a server running Ollama
+- Access to Google Cloud with the Vertex AI and associated APIs enabled and authenticated.
+- Local Ollama running if you want to run local models.
 
 ### Installation
 
