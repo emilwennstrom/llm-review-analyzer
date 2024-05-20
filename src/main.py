@@ -3,6 +3,7 @@ from langchain_community.document_loaders import DataFrameLoader
 from llms.predictions import *
 from llms.prompts import *
 from gcloud.translate_utilities import *
+from gcloud.storage_utilities import *
 from reviews.utilities import *
 from tqdm.auto import tqdm
 from vectors.clustering import cluster_reviews
@@ -10,7 +11,7 @@ import pandas as pd
 
 
 
-LOAD_FROM_BUCKET = False
+LOAD_FROM_BUCKET = True
 MODEL = chat_bison()
 TRANSLATE_REVIEWS = True
 
@@ -23,9 +24,15 @@ def main():
     if (LOAD_FROM_BUCKET is False):
         df_orig = load_and_convert_all_from_folder()
     else:
-        #Load from bucket
-        print("Implement")
+        df_orig = load_and_convert_from_bucket()
+        print(df_orig.head())
+        #list_blobs_in_bucket()
+        
     
+    
+    
+    
+    return
     if df_orig is None:
         raise ValueError("DataFrame is empty or not loaded properly")
 
@@ -42,7 +49,7 @@ def main():
     df = df[df['usable'] == True]
     df.drop('usable', axis=1, inplace=True)
     
-    # Predict if either a bug or feature
+    # Predict if either a bug report or feature request
     df['predicted'] = predict_text(column=df[column_to_use], model=MODEL, prompt_str=bug_or_feature_prompt)
     
     df['cluster_id'] = cluster_reviews(review_column=df[column_to_use], translated=TRANSLATE_REVIEWS)

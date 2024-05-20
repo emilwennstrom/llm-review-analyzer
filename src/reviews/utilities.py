@@ -1,5 +1,5 @@
 from . import *
-
+from gcloud.storage_utilities import *
 
 
 def _classify_dataframe(df: pd.DataFrame):
@@ -145,21 +145,36 @@ def load_and_convert_all_from_folder(folder_path: str = 'data\csv') -> pd.DataFr
     """
     try:
         dataframes = _load_all_csv_from_folder(folder_path)
-        cleaned_dfs = []
-        for df in dataframes:
-            _classify_dataframe(df)
-            provider = df.iloc[0]['provider']
-            if provider == 'Apple':
-                cleaned_dfs.append(_clean_apple_reviews(df))
-            elif provider == 'Google':
-                cleaned_dfs.append(_clean_google_reviews(df))
-            else:
-                raise Exception("Unknown Type")
-        combined_df = combine_and_sort_dataframes(cleaned_dfs)
-        combined_df = _drop_short_reviews(combined_df, 3)
-        combined_df = combined_df[combined_df['rating'] < 5]
-        return combined_df
-        
+        return _clean_and_combine_dataframes(dataframes=dataframes)
     except Exception as e:
         print(f"An error occurred: {e}")
-        
+
+def load_and_convert_from_bucket(bucket_name = STORAGE_BUCKET, project_id = PROJECT):
+    review_blobs_names = add_blobs_from_bucket(bucket_name=bucket_name, project_id=project_id)
+    dataframes = []
+    for blob_name in review_blobs_names:
+        reviews = get_reviews_from_bucket(blob_name=blob_name, bucket_name=bucket_name)
+        review_string = StringIO(reviews)
+        df = pd.read_csv(review_string)
+        dataframes.append(df)
+    if dataframes:
+        return _clean_and_combine_dataframes(dataframes=dataframes)
+    else:
+        raise Exception("No dataframes loaded")
+    
+
+def _clean_and_combine_dataframes(dataframes: list):
+    cleaned_dfs = []
+    for df in dataframes:
+        _classify_dataframe(df)
+        provider = df.iloc[0]['provider']
+        if provider == 'Apple':
+            cleaned_dfs.append(_clean_apple_reviews(df))
+        elif provider == 'Google':
+            cleaned_dfs.append(_clean_google_reviews(df))
+        else:
+            raise Exception("Unknown Type")
+    combined_df = combine_and_sort_dataframes(cleaned_dfs)
+    combined_df = _drop_short_reviews(combined_df, 3)
+    combined_df = combined_df[combined_df['rating'] < 5]
+    return combined_df
