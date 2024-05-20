@@ -67,3 +67,10 @@ python main.py
 - Adding New Review Sources: Modify reviews.utils.py to integrate more data sources.
 - Defining Models: Define new models or modify existing ones in llms.models.py.
 
+
+### Run with docker
+
+- Set environment variables in the Dockerfile
+- Copy application_default_credentials.json to root folder in project (see Dockerfile for default location).
+- docker build -t llm-review-analyzer .
+- docker run -it --rm llm-review-analyzer
