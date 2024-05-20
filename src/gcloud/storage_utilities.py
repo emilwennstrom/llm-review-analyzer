@@ -38,7 +38,6 @@ def add_blobs_from_bucket(bucket_name = STORAGE_BUCKET, project_id = PROJECT):
         
         if not available_blobs:
             print("No more files available to add.")
-            print(review_list)
             return review_list
         
         for index, blob in enumerate(available_blobs, start=1):
