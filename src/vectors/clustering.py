@@ -26,7 +26,7 @@ def cluster_reviews(review_column, translated = True, num_clusters = 10):
         # Cluster reviews
         d = embeddings_faiss.shape[1]  # Dimension of the embeddings
         k = num_clusters
-        kmeans = faiss.Kmeans(d, k, niter=25, verbose=True) # K-means clustering algoritm
+        kmeans = faiss.Kmeans(d, k, niter=400, verbose=True) # K-means clustering algoritm
         kmeans.train(embeddings_faiss)
 
         # Assigning the reviews to clusters

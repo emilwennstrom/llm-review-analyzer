@@ -25,19 +25,36 @@ def main():
         df_orig = load_and_convert_all_from_folder()
     else:
         df_orig = load_and_convert_from_bucket()
-        print(df_orig.head())
         #list_blobs_in_bucket()
         
     
     
     
-    
-    return
     if df_orig is None:
         raise ValueError("DataFrame is empty or not loaded properly")
 
     # Translate reviews
     df = df_orig.copy()
+
+    latest_date = df['last_updated'].max()
+    latest_date = latest_date - pd.DateOffset(months=0)
+    print(latest_date)
+    # Calculate the date one month back from the latest date
+    first_date = latest_date.replace(day=1)
+
+    print(first_date)
+
+
+
+
+    # Filter the DataFrame to include only the rows within the last month
+    filtered_df = df[(df['last_updated'] >= first_date) & 
+                    (df['last_updated'] <= latest_date)]
+
+
+    df = filtered_df
+
+
     column_to_use = 'translated' if TRANSLATE_REVIEWS else 'text'
     
     if (TRANSLATE_REVIEWS):
@@ -56,10 +73,11 @@ def main():
     
     print(df.head())
 
+    df.to_csv('out.csv')
     
-    return
     
-    df = predict_text(df_orig=df, model=chat_bison(), prompt_str=topics_prompt)
+    
+    #df = predict_text(df_orig=df, model=chat_bison(), prompt_str=topics_prompt)
         
     # Calculate moving average
     df_orig['moving_avg'] = df_orig['rating'].rolling(window=7).mean()  # 7-day moving average

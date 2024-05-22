@@ -1,5 +1,5 @@
 from . import *
-from gcloud.storage_utilities import *
+from gcloud.storage_utilities import add_blobs_from_bucket
 
 
 def _classify_dataframe(df: pd.DataFrame):
