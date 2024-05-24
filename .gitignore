@@ -106,7 +106,7 @@ __pypackages__/
 
 # Ignore csv
 *.csv
-!data/csv/*.csv
+!data/fake_reviews/*.csv
 
 # Celery stuff
 celerybeat-schedule
