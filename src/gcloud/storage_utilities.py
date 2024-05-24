@@ -23,6 +23,12 @@ def list_blobs_in_bucket(bucket_name = STORAGE_BUCKET):
     blobs = bucket.list_blobs()
     for blob in blobs:
         print(blob.name)
+        
+
+def save_csv_to_bucket(bucket_name = STORAGE_BUCKET):
+    storage_client = storage_client(project = PROJECT)
+    bucket = storage_client.bucket(bucket_name)
+    
     
 
 

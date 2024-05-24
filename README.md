@@ -38,7 +38,12 @@ Mac/Linux: source venv/bin/activate
 3. **Install Dependencies**
 
 ```bash
+Windows:
 pip install -r requirements.txt
+
+
+Mac/Linux:
+pip install -r requirements_docker.txt
 ```
 
 ### Configuration

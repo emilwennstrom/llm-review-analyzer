@@ -21,7 +21,6 @@ ENV OLLAMA_URL=http://localhost:11434 \
 # Linux/Mac:$HOME/.config/gcloud/application_default_credentials.json
 # to root folder. (not a very good solution)
 COPY application_default_credentials.json /app/gcloud-credentials.json
-
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/gcloud-credentials.json
 
 CMD ["python", "src/main.py"]

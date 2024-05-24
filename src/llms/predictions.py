@@ -5,6 +5,15 @@ import pandas as pd
 
 
 
+def summarize_list(review_list: list, model, prompt_str):
+    result_string = '\n'.join(review_list)
+    prompt = ChatPromptTemplate.from_messages([("system", prompt_str), ("human", f"Reviews: {result_string}")])
+    try:
+        result = query_model(model=model, prompt=prompt)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return result
+
 def predict_text(column, model, prompt_str) -> pd.Series:
     """_summary_
 
