@@ -106,7 +106,7 @@ __pypackages__/
 
 # Ignore csv
 *.csv
-!data/*.csv
+!data/csv/*.csv
 
 # Celery stuff
 celerybeat-schedule
