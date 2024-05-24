@@ -1,5 +1,5 @@
 from . import *
-from ..gcloud.storage_utilities import *
+from gcloud.storage_utilities import *
 
 
 
