@@ -22,7 +22,7 @@ def main():
     df_orig = None
     # Load data from either file or bucket
     if (LOAD_FROM_BUCKET is False):
-        df_orig = load_and_convert_all_from_folder()
+        df_orig = load_and_convert_all_from_folder(folder_path='data/fake_reviews')
     else:
         df_orig = load_and_convert_from_bucket()
         print(df_orig.head())

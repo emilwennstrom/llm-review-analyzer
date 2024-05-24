@@ -43,7 +43,7 @@ def _load_csv_from_file(path: str) -> pd.DataFrame:
         raise Exception(f"File not found for path: {path}")
     
     
-def _load_all_csv_from_folder(path: str = 'data/csv'):
+def _load_all_csv_from_folder(path: str = 'data/fake_reviews'):
     """
     Loads all CSV files from the specified folder path into a list of pandas DataFrames.
     
@@ -127,7 +127,7 @@ def _drop_short_reviews(df, threshold):
     return df
 
 
-def load_and_convert_all_from_folder(folder_path: str = 'data/csv') -> pd.DataFrame:
+def load_and_convert_all_from_folder(folder_path: str = 'data/fake_reviews') -> pd.DataFrame:
     """
     Loads, cleans, and combines CSV files from a specified directory into a single DataFrame.
 
