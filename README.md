@@ -1,6 +1,6 @@
 # LLM Review Analyzer
 
-LLM Review Analyzer is a Python-based tool designed to automate the analysis of app reviews from the Google Play Store and Apple App Store. This tool utilizes local and cloud-based language models to process and analyze review data, providing insights and summaries to help improve app performance and user satisfaction.
+LLM Review Analyzer is a Python-based tool designed to automate the analysis of app reviews from the Google Play Store and Apple App Store. 
 
 ## Features
 
